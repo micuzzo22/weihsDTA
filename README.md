@@ -2,12 +2,9 @@
 A collection of functions that are used for DTA analysis in python
 
 The functions in this repository are only meant to be used for analysis of DTA runs with the SDT Q600 in MD 11a.
-You can adapt them to whatever you want, idrc about licensing.
-
-I tried to include as much documentation in the functions themselves and I believe that the sample scripts give clear enough examples
-where you can adapt the process flow to your data.
-
-If you run into any issues or have features you'd like to add feel free to ask.
+You can adapt them to whatever you want. I tried to include as much documentation in the functions themselves and I believe that the 
+sample scripts give clear enough examples where you can adapt the process flow to your data. If you run into any issues or have features 
+you'd like to add feel free to ask.
 
 - Michael
 
@@ -26,10 +23,22 @@ If you run into any issues or have features you'd like to add feel free to ask.
 
 ### Formatting Data
 - After running an initial scan and baseline scan, you can export the data into a text file
-- I like to put the data scans for each run in one excel sheet (see excel file as an example)
-- It is important to note the starting mass of the sample for each run, which I record under the “comment” section. The DTA mass balance is sometimes different than that of the microbalance even after taring
+- Place the text from the output .txt that TA analysis gives into an appropriately filled out excel file. See the format
+  of the example file.
+- It is important to note the starting mass of the sample for each run, which I record under the “comment” section when running the DTA. 
+  The DTA mass balance is sometimes different than that of the microbalance even after taring.
+- Once the data is put into a properly formatted excel sheet you can begin analyzing.
 
 ### Data Extraction / Analysis
+- The main function that gets and manipulates the data gathered from the excel sheet is `get_dta_data`. This function takes in the filenames of the excel document and sheet as well as the initial mass of the sample. Look at the details of the function to see what the list it outputs contains.
+
+```python
+os.chdir(r"location of excel file")
+spread_sheet_ar = "Argon DTA Results.xlsx"
+# main data extract
+ar_alzr_run1_im = 11.469
+ar_alzr_run1 = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",ar_alzr_run1_im)
+```
 
 ### Data Adjustment
 Before integrating to get the intermetallic heat, or finding the mass gain to get the heat from oxidation / nitridiation, we have to make sure the curves are properly adjusted.
