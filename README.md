@@ -35,8 +35,7 @@ you'd like to add feel free to ask.
 ```python
 os.chdir(r"location of excel file")
 spread_sheet_ar = "Argon DTA Results.xlsx"
-# main data extract
-ar_alzr_run1_im = 11.469
+ar_alzr_run1_im = 11.469   # initial mass in milligrams
 ar_alzr_run1 = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",ar_alzr_run1_im)
 ```
 
