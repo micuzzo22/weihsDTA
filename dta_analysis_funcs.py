@@ -19,7 +19,6 @@ import numpy as np
 
 from molar_mass_calculator import *
 
-#%%
 def get_dta_data(filename,sheetname,initial_mass):
     '''
     This function takes in the data from DTA run and returns a list with useful information
@@ -69,8 +68,6 @@ def get_dta_data(filename,sheetname,initial_mass):
        
     return [data, temp, time_sec, bls_hf, true_mass, norm_hf, norm_hf_bl, norm_hf_bls]
 
-#%% helper functions
-
 def get_lower_upper_idxs(temperatures,ltb,utb):
     '''
     Finds the dataframe index that corresponds to the temperature bounds you will want for 
@@ -99,9 +96,6 @@ def get_lower_upper_idxs(temperatures,ltb,utb):
     final_idx = temperatures.sub(utb).abs().idxmin()
     
     return initial_idx, final_idx
-
-
-#%% For leveling DTA curve find idx of temperature range you want to investigate
 
 def perform_adjustment(run_data, ltb, utb):
     '''
@@ -148,8 +142,6 @@ def perform_adjustment(run_data, ltb, utb):
         
     return run_data_adj
 
-
-#%%
 def get_intermetallic_heat(ar_run_data,ltb,utb,ar_initial_mass):
     
     '''
@@ -188,7 +180,6 @@ def get_intermetallic_heat(ar_run_data,ltb,utb,ar_initial_mass):
     
     return intermetallic_heat
 
-#%%
 def mass_gain_over_temp_range(aro2_run_data, ltb,utb):
     '''
     Calculates mass gain over given temperature range. Can be used for Ar + O2 or
@@ -225,7 +216,6 @@ def mass_gain_over_temp_range(aro2_run_data, ltb,utb):
     
     return mg
 
-#%%
 def get_heat_oxidation(aro2_run_data,ltb,utb,initial_mass):
     '''
     Calculates the heat of oxidation. Assumes that all mass gain is from O2 that
@@ -255,7 +245,6 @@ def get_heat_oxidation(aro2_run_data,ltb,utb,initial_mass):
     
     return oxidation_heat
 
-#%%
 def get_heat_nitridation(arn2_run_data,ltb,utb,initial_mass):
     '''
     Calculates the heat of nitridation. Assumes an average value between the heat of
@@ -288,7 +277,6 @@ def get_heat_nitridation(arn2_run_data,ltb,utb,initial_mass):
     
     return nitridation_heat
 
-#%%
 def avg_stdev_heat(run_data_list,ltb,utb,initial_mass_list,heat_type):
     '''
     Calculates the avg and standard deviation heat release over a given temperature
@@ -344,7 +332,6 @@ def avg_stdev_heat(run_data_list,ltb,utb,initial_mass_list,heat_type):
         
     return avg_heat, heat_stdev
 
-#%%
 def calculate_incremental_cumulative_heat(run_data_list,start_temp,end_temp,step,initial_mass_list,heat_type):
     '''
     Calculates the incremental heat release over a given temperature range at a given step size
@@ -398,7 +385,6 @@ def calculate_incremental_cumulative_heat(run_data_list,start_temp,end_temp,step
 
     return incremental_heat, incremental_heat_stdev, cumulative_heats
 
-#%% converts kJ/mol
 def convert_Jg_kJmol(heat_J_g,chemstring,numatoms):
     '''
     Converts heat in J/g to kJ/mol
