@@ -32,14 +32,13 @@ If you run into any issues or have features you'd like to add feel free to ask.
 #### Data Extraction / Analysis
 
 #### Data Adjustment
-###### Intermetallic heat flow
 Before integrating to get the intermetallic heat, or finding the mass gain to get the heat from oxidation / nitridiation, we have to make sure the curves are properly adjusted.
 
-Running the `get_dta_data` function will already give you normalized baseline subtracted heat flow, however, sometimes the curve still needs adjusting. Ideally, the curve should start at 0 W/g and end at 0 W/g assuming all reactions have fully completed. 
+Running the `get_dta_data` function will already give you normalized baseline subtracted heat flow, however, sometimes the curve still needs adjusting. Ideally, the curve should start at 0 W/g and end at 0 W/g assuming all reactions have fully completed. Looking at the graph below, you can see that the unadjusted curve starts below 0. To adjust this, we the `perform_adjustment` function which modifies the extracted data from `get_dta_data`
 
-###### Mass gain curve
+![DTA-adj-vs_unadjusted](https://github.com/micuzzo22/weihsDTA/assets/114498532/13e4da72-c84b-49fc-acfb-377b65f9a423)
 
-
+The `perform_adjustment` function requires the user specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
 
 #### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
