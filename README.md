@@ -22,4 +22,22 @@ If you run into any issues or have features you'd like to add feel free to ask.
   of the example file.
 4) Perform analysis
 
+## DTA Analysis 
+
+#### Formatting Data
+- After running an initial scan and baseline scan, you can export the data into a text file
+- I like to put the data scans for each run in one excel sheet (see excel file as an example)
+- It is important to note the starting mass of the sample for each run, which I record under the “comment” section. The DTA mass balance is sometimes different than that of the microbalance even after taring
+
+#### Data Extraction / Analysis
+
+
+#### Heat of Oxidation
+Here is a simple footnote[^1].
+
+[^1]: [My reference](https://link.springer.com/article/10.1007/s10853-020-05031-5).
+
+
+
+
 
