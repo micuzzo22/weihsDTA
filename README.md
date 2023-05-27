@@ -39,14 +39,20 @@ im = 11.469 # initial mass
 run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im) # get main data
 ```
 
-### Data Adjustment
-Before integrating to get the intermetallic heat, or finding the mass gain to get the heat from oxidation / nitridiation, we have to make sure the curves are properly adjusted.
+### Heat Data Adjustment
+Before integrating to get the intermetallic heat we have to make sure the heat curves are properly adjusted.
 
 Running the `get_dta_data` function will already give you normalized baseline subtracted heat flow, however, sometimes the curve still needs adjusting. Ideally, the curve should start at 0 W/g and end at 0 W/g assuming all reactions have fully completed. Looking at the graph below, you can see that the unadjusted curve starts below 0. To change this, we can use the `perform_adjustment` function which modifies the extracted data from `get_dta_data`
 
-![DTA-adj-vs_unadjusted](https://github.com/micuzzo22/weihsDTA/assets/114498532/13e4da72-c84b-49fc-acfb-377b65f9a423)
-
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
+
+### Intermetallic Heat
+Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. 
+
+When comparing the intermetallic heats of different chemistry powders, you can use the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass per atom of a compound by running 
+
+### Mass Gain Curve Adjustment
+To calculate the heat 
 
 ### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
@@ -54,6 +60,8 @@ We can estimate the heat of oxidation by looking at the mass gain in an oxidizin
 In Eliot's paper (Wainwright 2020[^1]), he cites a value of 263 kcal/mol for the formation of ZrO2 which is equal to 1100.392 kJ/mol (8.907 kJ/g)[^2]. By performing some dimensional analysis we see that for every 1 g of O2 added, 2.85 g of Zr is reacted (=3.85 total g). This gives us a value of 34.3 kJ/mol for every 1 g of O2 gained.
 
 After performing the necessary adjustments to the data, we can calculate the heat of oxidation with the `get_heat_oxidation` function in the `dta_analysis_funcs` library.
+
+### Heat of Nitridation
 
 [^1]: https://link.springer.com/article/10.1007/s10853-020-05031-5.
 [^2]: https://www.osti.gov/servlets/purl/372665 
