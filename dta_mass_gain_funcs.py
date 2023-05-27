@@ -41,7 +41,6 @@ def get_mg_percentage_avg_stdev(run_data_list,initial_masses_list):
 
     '''
     
-    
     mass_gain_percentages = []
     for i in range(len(run_data_list)):
         run_data_mg = 100 * (run_data_list[i][0]['Mass Diff Scan1'] / initial_masses_list[i])
@@ -53,7 +52,6 @@ def get_mg_percentage_avg_stdev(run_data_list,initial_masses_list):
         
     return run_data_mg_avg, run_data_mg_stdev
 
-#%% 
 def get_start_mass_gain(avg_mass_change,aro2_run_data,cutoff_temp,threshold=1e-4,smooth_value=51,plot=False):
     '''
     Using the averaged data, create a smoothed curve that approximates the average, and find the difference in 
@@ -115,7 +113,6 @@ def get_start_mass_gain(avg_mass_change,aro2_run_data,cutoff_temp,threshold=1e-4
     
     return initial_idx, temp
     
-#%%
 def adjust_avg_mass_gain(run_mg_avg,mg_start_idx):
     '''
     Finds the mass where the mass rise begins and makes that the new initial mass. Then it subtracts
@@ -146,7 +143,6 @@ def adjust_avg_mass_gain(run_mg_avg,mg_start_idx):
     
     return run_mg_avg_adj
 
-#%%
 def modify_run_mass_diff(aro2_run_data,mg_start_idx,im):
     '''
     Modifies the original extracted dataframe and sets the mass below the starting index to 0
