@@ -35,8 +35,8 @@ you'd like to add feel free to ask.
 ```python
 os.chdir(r"C:\Users\Mikey\Documents\Materials\JHU\Projects\Anneal_Project\DTA")
 spread_sheet_ar = "Argon DTA Results.xlsx"
-im = 11.469                                                                     # initial mass
-run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im)          # get main data
+im = 11.469 # initial mass
+run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im) # get main data
 ```
 
 ### Data Adjustment
