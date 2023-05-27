@@ -49,10 +49,10 @@ The `perform_adjustment` function requires the user to specify the lower and upp
 ### Intermetallic Heat
 Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. 
 
-When comparing the intermetallic heats of different chemistry powders, you can use the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass per atom of a compound by running 
+When comparing the intermetallic heats of different chemistry powders, you can use the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass of a compound by using the `get_molar_mass` function. This function has a particular syntax it expects. Use the empirical formula of the compound as a string in the form "XmYn" where X and Y are the chemical symbols and m and n are integers. It can handle all multi element compounds. 
 
 ### Mass Gain Curve Adjustment
-To calculate the heat 
+To calculate the heat of oxidation or nitridation we use the mass gain. The DTA often shows an initial dip in the mass gain curve, which should not happen (it normally is greater than what can be attributed to solvent evaporation). We therefore adjust the mass gain curve to 0 while the slope is negative and use the mass at the inflection point for calculating mass gain. The functions that are used to modify the mass gain curve for a trial run are in `dta_mass_gain_funcs.py`. 
 
 ### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
