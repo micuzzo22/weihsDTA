@@ -33,10 +33,10 @@ you'd like to add feel free to ask.
 - The main function that gets and manipulates the data gathered from the excel sheet is `get_dta_data`. This function takes in the filenames of the excel document and sheet as well as the initial mass of the sample. Look at the details of the function to see what the list it outputs contains.
 
 ```python
-os.chdir(r"location of excel file")
+os.chdir(r"C:\Users\Mikey\Documents\Materials\JHU\Projects\Anneal_Project\DTA")
 spread_sheet_ar = "Argon DTA Results.xlsx"
-ar_alzr_run1_im = 11.469   # initial mass in milligrams
-ar_alzr_run1 = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",ar_alzr_run1_im)
+im = 11.469                                                                     # initial mass
+run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im)          # get main data
 ```
 
 ### Data Adjustment
@@ -45,7 +45,6 @@ Before integrating to get the intermetallic heat, or finding the mass gain to ge
 Running the `get_dta_data` function will already give you normalized baseline subtracted heat flow, however, sometimes the curve still needs adjusting. Ideally, the curve should start at 0 W/g and end at 0 W/g assuming all reactions have fully completed. Looking at the graph below, you can see that the unadjusted curve starts below 0. To change this, we can use the `perform_adjustment` function which modifies the extracted data from `get_dta_data`
 
 ![DTA-adj-vs_unadjusted](https://github.com/micuzzo22/weihsDTA/assets/114498532/13e4da72-c84b-49fc-acfb-377b65f9a423)
-<img src="(https://github.com/micuzzo22/weihsDTA/assets/114498532/13e4da72-c84b-49fc-acfb-377b65f9a423)" width="4">
 
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
 
