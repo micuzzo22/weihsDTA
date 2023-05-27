@@ -33,10 +33,12 @@ you'd like to add feel free to ask.
 - The main function that gets and manipulates the data gathered from the excel sheet is `get_dta_data`. This function takes in the filenames of the excel document and sheet as well as the initial mass of the sample. Look at the details of the function to see what the list it outputs contains.
 
 ```python
+# Example
 os.chdir(r"C:\Users\Mikey\Documents\Materials\JHU\Projects\Anneal_Project\DTA")
 spread_sheet_ar = "Argon DTA Results.xlsx"
+sheetname = "AlZr_081722_Ar_022123_R1"
 im = 11.469 # initial mass
-run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im) # get main data
+run_data = get_dta_data(spread_sheet_ar,sheetname,im) # get main data
 ```
 
 ### Heat Curve Data Adjustment
@@ -46,17 +48,28 @@ Running the `get_dta_data` function will already give you normalized baseline su
 ```python
 run_data = perform_adjustment(run_data, 100, 200)
 ```
-
+![dta-baseline-scan1-blshf-adj](https://github.com/micuzzo22/weihsDTA/assets/114498532/688484e9-5cba-4000-9568-4945310a8b93)
 
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
 
 ### Intermetallic Heat
 Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. 
 
-When comparing the intermetallic heats of different chemistry powders, you can use the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass of a compound by using the `get_molar_mass` function. This function has a particular syntax it expects. Use the empirical formula of the compound as a string in the form "XmYn" where X and Y are the chemical symbols and m and n are integers. It can handle all multi element compounds. 
+When comparing the intermetallic heats of different chemistry powders, you will get the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass of a compound with the `get_molar_mass` function. This function has a particular syntax it expects. Use the empirical formula of the compound as a string in the form "XmYn" where X and Y are the chemical symbols and m and n are integers. It can handle all multi element compounds. 
+
+```python
+# Get the intermetallic heat in J/g and kJ/mol
+im_heat_J_g = get_intermetallic_heat(run_data, lower_temp, upper_temp, im)
+im_heat_kJ_mol = convert_Jg_kJmol(im_heat_J_g,chemstring,numatoms)
+
+# print out results
+print("The intermetallic heat in J/g is: " + "{:.2f}".format(im_heat_J_g))
+print("The intermetallic heat in kJ/mol is: " + "{:.2f}".format(im_heat_kJ_mol))
+```
 
 ### Mass Gain Curve Adjustment
 To calculate the heat of oxidation or nitridation we use the mass gain. The DTA often shows an initial dip in the mass gain curve, which should not happen (it normally is greater than what can be attributed to solvent evaporation). We therefore adjust the mass gain curve to 0 while the slope is negative and use the mass at the inflection point for calculating mass gain. The functions that are used to modify the mass gain curve for a trial run are in `dta_mass_gain_funcs.py`. 
+
 
 ### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
@@ -66,6 +79,9 @@ In Eliot's paper (Wainwright 2020[^1]), he cites a value of 263 kcal/mol for the
 After performing the necessary adjustments to the data, we can calculate the heat of oxidation with the `get_heat_oxidation` function in the `dta_analysis_funcs` library.
 
 ### Heat of Nitridation
+
+
+### Cumulative & Incremental Heat Release
 
 [^1]: https://link.springer.com/article/10.1007/s10853-020-05031-5.
 [^2]: https://www.osti.gov/servlets/purl/372665 
