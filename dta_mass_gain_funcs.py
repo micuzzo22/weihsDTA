@@ -18,7 +18,6 @@ import numpy as np
 
 from molar_mass_calculator import *
 
-#%%
 def get_mg_percentage_avg_stdev(run_data_list,initial_masses_list):
     
     mass_gain_percentages = []
@@ -32,7 +31,6 @@ def get_mg_percentage_avg_stdev(run_data_list,initial_masses_list):
         
     return run_data_mg_avg, run_data_mg_stdev
 
-#%% 
 def get_start_mass_gain(avg_mass_change,aro2_run_data,cutoff_temp,threshold=1e-4,smooth_value=51,plot=False):
     
     avg_mass_change_diff = avg_mass_change.diff().fillna(0)
@@ -64,7 +62,6 @@ def get_start_mass_gain(avg_mass_change,aro2_run_data,cutoff_temp,threshold=1e-4
     
     return initial_idx, temp
     
-#%%
 def adjust_avg_mass_gain(run_mg_avg,mg_start_idx):
     
     # make a new column that has "true" mass gain differential
@@ -78,7 +75,6 @@ def adjust_avg_mass_gain(run_mg_avg,mg_start_idx):
     
     return run_mg_avg_adj
 
-#%%
 def modify_run_mass_diff(aro2_run_data,mg_start_idx,im):
     
     aro2_run_data[0]['Mass Diff Scan1'] - aro2_run_data[0]['Mass Diff Scan1'].loc[mg_start_idx] 
