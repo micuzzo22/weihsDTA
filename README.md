@@ -68,8 +68,19 @@ print("The intermetallic heat in kJ/mol is: " + "{:.2f}".format(im_heat_kJ_mol))
 ```
 
 ### Mass Gain Curve Adjustment
-To calculate the heat of oxidation or nitridation we use the mass gain. The DTA often shows an initial dip in the mass gain curve, which should not happen (it normally is greater than what can be attributed to solvent evaporation). We therefore adjust the mass gain curve to 0 while the slope is negative and use the mass at the inflection point for calculating mass gain. The functions that are used to modify the mass gain curve for a trial run are in `dta_mass_gain_funcs.py`. 
+To calculate the heat of oxidation or nitridation we use the mass gain. The DTA often shows an initial fast rise and then dip in the mass gain curve, which should not happen. We therefore adjust the mass gain curve to 0 while the slope is negative and use the mass at the inflection point for calculating mass gain. The functions that are used to modify the mass gain curve for a trial run are in `dta_mass_gain_funcs.py`. 
 
+```python
+run_data_mg_avg, run_data_mg_stdev = get_mg_percentage_avg_stdev(run_data_list,initial_masses_list)
+initial_idx, temp = get_start_mass_gain(avg_mass_change,aro2_run_data,cutoff_temp,threshold=1e-4,smooth_value=51,plot=False)
+run_mg_avg_adj = adjust_avg_mass_gain(run_mg_avg,mg_start_idx)
+aro2_run_data = modify_run_mass_diff(aro2_run_data,mg_start_idx,im)
+```
+
+The method I use follows these steps:
+1. For one run, or multiple runs, find the average percentage mass gain at each temperature
+2. Using the averaged data, create a smoothed curve that approximates the average, and find the difference in mass gain between the current and previous mass. Then a threshold value is used to determine when the difference exceeds an appropriate value of mass gain difference. Temperatures below the cutoff temperature are not considered. Find the index and temperature where this occurs.
+3. Adjust the average mass gain. The new initial mass is the mass at the thresholded point and that part of the curve is shifted to 0. 
 
 ### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
