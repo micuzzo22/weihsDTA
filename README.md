@@ -53,7 +53,7 @@ run_data = perform_adjustment(run_data, 100, 200)
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
 
 ### Intermetallic Heat
-Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. 
+Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. By integrating the curve you get mW * seconds = mJ. This can be divided by the initial starting mass in mg to get J/g.
 
 When comparing the intermetallic heats of different chemistry powders, you will get the molar heat by converting from J/g to kJ/mol by using the molar mass per atom. The `molar_mass_calculator.py` script easily allows you to find the molar mass of a compound with the `get_molar_mass` function. This function has a particular syntax it expects. Use the empirical formula of the compound as a string in the form "XmYn" where X and Y are the chemical symbols and m and n are integers. It can handle all multi element compounds. 
 
