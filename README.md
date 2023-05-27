@@ -39,10 +39,14 @@ im = 11.469 # initial mass
 run_data = get_dta_data(spread_sheet_ar,"AlZr_081722_Ar_022123_R1",im) # get main data
 ```
 
-### Heat Data Adjustment
+### Heat Curve Data Adjustment
 Before integrating to get the intermetallic heat we have to make sure the heat curves are properly adjusted.
 
 Running the `get_dta_data` function will already give you normalized baseline subtracted heat flow, however, sometimes the curve still needs adjusting. Ideally, the curve should start at 0 W/g and end at 0 W/g assuming all reactions have fully completed. Looking at the graph below, you can see that the unadjusted curve starts below 0. To change this, we can use the `perform_adjustment` function which modifies the extracted data from `get_dta_data`
+```python
+run_data = perform_adjustment(run_data, 100, 200)
+```
+
 
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
 
