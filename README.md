@@ -81,6 +81,8 @@ The method I use follows these steps:
 1. For one run, or multiple runs, find the average percentage mass gain at each temperature
 2. Using the averaged data, create a smoothed curve that approximates the average, and find the difference in mass gain between the current and previous mass. Then a threshold value is used to determine when the difference exceeds an appropriate value of mass gain difference. Temperatures below the cutoff temperature are not considered. Find the index and temperature where this occurs.
 3. Adjust the average mass gain. The new initial mass is the mass at the thresholded point and that part of the curve is shifted to 0. 
+---
+
 
 ### Heat of Oxidation
 We can estimate the heat of oxidation by looking at the mass gain in an oxidizing environment like Ar+O2. We assume that for Al/Zr powders, ZrO2 will primarily be forming as the powder oxidizes (Wainwright 2020[^1]). All the mass gain shown by the DTA balance is due to oxygen being added. So for every 1 g of O2 added we can calculate how much ZrO2 is formed.
