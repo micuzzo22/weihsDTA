@@ -28,7 +28,7 @@ you'd like to add feel free to ask.
 - It is important to note the starting mass of the sample for each run, which I record under the “comment” section when running the DTA. 
   The DTA mass balance is sometimes different than that of the microbalance even after taring.
 - Once the data is put into a properly formatted excel sheet you can begin analyzing.
-
+---
 ### Data Extraction / Analysis
 - The main function that gets and manipulates the data gathered from the excel sheet is `get_dta_data`. This function takes in the filenames of the excel document and sheet as well as the initial mass of the sample. Look at the details of the function to see what the list it outputs contains.
 
@@ -40,7 +40,7 @@ sheetname = "AlZr_081722_Ar_022123_R1"
 im = 11.469 # initial mass
 run_data = get_dta_data(spread_sheet_ar,sheetname,im) # get main data
 ```
-
+---
 ### Heat Curve Data Adjustment
 Before integrating to get the intermetallic heat we have to make sure the heat curves are properly adjusted.
 
@@ -51,7 +51,7 @@ run_data = perform_adjustment(run_data, 100, 200)
 ![dta-baseline-scan1-blshf-adj](https://github.com/micuzzo22/weihsDTA/assets/114498532/688484e9-5cba-4000-9568-4945310a8b93)
 
 The `perform_adjustment` function requires the user to specify the lower and upper temperature bounds. You want to choose bounds around the region where there is a local minimum that can be adjusted. Don't do it below 50C since the DTA is full of artifacts early on. I normally choose around 120-250C. It's also possible that the curve needs to shift down, the `perform_adjustment` function will handle both cases.
-
+---
 ### Intermetallic Heat
 Now that the curve has been properly adjusted you can integrate to find the intermetallic heat. By integrating the curve you get mW * seconds = mJ. This can be divided by the initial starting mass in mg to get J/g.
 
@@ -66,7 +66,7 @@ im_heat_kJ_mol = convert_Jg_kJmol(im_heat_J_g,chemstring,numatoms)
 print("The intermetallic heat in J/g is: " + "{:.2f}".format(im_heat_J_g))
 print("The intermetallic heat in kJ/mol is: " + "{:.2f}".format(im_heat_kJ_mol))
 ```
-
+---
 ### Mass Gain Curve Adjustment
 To calculate the heat of oxidation or nitridation we use the mass gain. The DTA often shows an initial fast rise and then dip in the mass gain curve, which should not happen. We therefore adjust the mass gain curve to 0 while the slope is negative and use the mass at the inflection point for calculating mass gain. The functions that are used to modify the mass gain curve for a trial run are in `dta_mass_gain_funcs.py`. 
 
