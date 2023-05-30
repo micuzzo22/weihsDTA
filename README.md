@@ -96,6 +96,11 @@ After performing the necessary adjustments to the data, we can calculate the hea
 
 ### Cumulative & Incremental Heat Release
 
+![Eliot_Wainwright-2020_AlZr_heats-cumulative](https://github.com/micuzzo22/weihsDTA/assets/114498532/a2eb9a43-7f8c-47ca-aaa6-cdc09f2bb76a)
+Figure 11 from Ref [^1]. Shows the cumulative heat release for Al:Zr powder at 25C increments to compare the contribution of intermetallic vs oxidation heat leading to ignition.
+
+REFERENCES
+---
 [^1]: https://link.springer.com/article/10.1007/s10853-020-05031-5.
 [^2]: https://www.osti.gov/servlets/purl/372665 
 
