@@ -96,7 +96,7 @@ After performing the necessary adjustments to the data, we can calculate the hea
 
 ### Cumulative & Incremental Heat Release
 
-Use the `fsadf` function to return a list of cumulative and incremental heats over a given temperature range at a particular step size. The data can be used to make a plot like the one shown below.
+Use the `calculate_incremental_cumulative_heat` function to return a list of cumulative and incremental heats over a given temperature range at a particular step size. The data can be used to make a plot like the one shown below.
 
 ![Eliot_Wainwright-2020_AlZr_heats-cumulative](https://github.com/micuzzo22/weihsDTA/assets/114498532/a2eb9a43-7f8c-47ca-aaa6-cdc09f2bb76a)
 Figure 11 from Ref [^1]. Shows the cumulative heat release for Al:Zr powder at 25C increments to compare the contribution of intermetallic vs oxidation heat leading to ignition.
